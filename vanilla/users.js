@@ -1,25 +1,33 @@
 
-function makeFetch (URL, id){
+function makeFetch (URL, app, id){
+ var App = document.getElementById(app)
   
-  var App = document.getElementById(id)
+ if(id){
+   fetch(URL+'/'+id, { method: 'get' })
+  .then(function(response){
+    response.text()
+      .then(function(result){      
+        App.textContent = result
+      })
+   })
 
-  fetch(URL, {
-    method: 'get'
-  }).then(function(response){
-  
-     response.text().then(function(result){      
-       App.textContent = result
-    })
- })
+ }else {
+  fetch(URL, { method: 'get' })
+  .then(function(response){
+    response.text()
+      .then(function(result){      
+        App.textContent = result
+      })
+   })
+ }
 }
 
 var URL = 'https://api.github.com/users'
-makeFetch(URL, "app")
 
 function filter(id){
-  var App = document.getElementById(id)
-
-  console.log(App.textContent)
+  makeFetch(URL, "app", id)
 }
 
-//filter("app")
+function index(){
+  makeFetch(URL, "app")
+}
